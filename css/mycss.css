@@ -1,0 +1,297 @@
+
+.container .contestants
+{
+    width: 25%;
+    height: auto;
+    background-color: #fff;
+    float: left;
+    color: #094ea8;
+    margin-left: 35px;
+    margin-top: 20px;
+    padding: 10px;
+    border: solid 3px #f3f3f3;
+	border-radius: 10px;
+	
+}
+
+.container form .sub{
+	font-size: 14px;
+	text-transform: uppercase;
+	border: 1px solid #f08c0a;
+	border-radius: 5px;
+	padding: 10px;
+	color: #f08c0a;
+	font-weight: 700;
+	background: transparent;
+	margin-left: 30%;
+	margin-top: 30px;
+}
+.container .contestants h4
+{
+	font-family: monospace;
+	font-size: initial;
+    border-bottom: solid 2px #f3f3f3;
+    border-bottom-width: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    
+}
+
+.container .contestants label
+{
+    width: 100%;
+}
+
+.container .contestants label input
+{
+	background-color: #ffffff;
+	
+}
+.manifesto{
+    width: 100%;
+    margin-top:30px;
+    border: 1px solid #f3f3f3;
+    padding: 20px 20px 20px 20px;
+    box-shadow: 0px 25px 35px rgba(0, 0, 0, 0.1);
+
+}
+.profile{
+    margin-top:px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid yellow;
+    padding: 5px;
+    color: black;
+	display: inline-block;
+	color: #000000;
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: 7;
+	background: transparent;
+	padding: 10px;
+}
+
+.profile:hover{
+    margin-top:px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid #f0e00a;
+    padding: 5px;
+    color: black;
+	display: inline-block;
+	color: black;
+	font-size: 10px;
+	font-weight: 7;
+	background: #f0e00a;
+	padding: 10px;
+}
+.footer-section .container{
+    padding: 10px;
+	text-align: center;
+	
+}
+.footer-section .container em{
+    color :#f0e00a;
+	border: 10px;
+	
+
+    
+}
+.footer-section .container h5{
+ color: white;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.disp-Rult{
+	width: 100%;
+	height: auto;
+	background-color: #ffffff;
+	padding: 2%;
+	box-shadow: 4px 25px 35px rgba(0, 0, 0, 0.1);
+	margin-bottom: 50px;
+	border-bottom: 1px solid #707079;
+}
+.disp-Rult .ful-pacentage{
+	width: 80%;
+	height: 15px;
+	background-color: #cccccc;
+	border-radius: 30px;
+}
+
+.disp-Rult .ful-pacentage .vote-pacentage{
+	height: 10px;
+	background-color: #0e0af0;
+	border-radius: 50px;
+	text-align: center;
+	font-size: 12px;
+	line-height: 10px;
+}
+
+.booking-form .inner img{
+	border-radius: 100px;
+	height: 40px;
+}
+
+.booking-form .inner span{
+	margin-left: 4%;
+}
+
+.booking-form .inner .bar{
+	margin-top: -9%;
+	margin-left: 80%;
+	width: 20%;
+	height: 8px;
+	background-color: crimson;
+	border-radius: 50px;
+}
+
+.booking-form .inner .bar2{
+	margin-top: -9%;
+	margin-left: 80%;
+	width: 15%;
+	height: 8px;
+	background-color: rgb(44, 34, 100);
+	border-radius: 50px;
+}
+
+.booking-form .inner .bar3{
+	margin-top: -9%;
+	margin-left: 80%;
+	width: 8%;
+	height: 8px;
+	background-color: rgb(220, 140, 20);
+	border-radius: 50px;
+}
+.get a div{
+	border: 1px solid #f0e00a;
+	background-color: #f0e00a;
+	border-radius: 6px;
+	text-align: center;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	box-shadow: 0px 25px 35px rgba(0, 0, 0, 0.1);
+
+}
+
+
+@media screen and (max-width: 700px) 
+{
+    .container .contestants{
+    width: 70%;
+    height: auto;
+    background-color: #fff;
+    color: #094ea8;
+    margin-left: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    border: solid 3px #f3f3f3;
+    border-radius: 10px;
+}
+
+.room-booking {
+	padding: 8%;
+	box-shadow: 0px 25px 35px rgba(0, 0, 0, 0.1);
+}
+.room-booking h3 {
+	color: #19191a;
+	margin-bottom: 30px;
+}
+.room-booking form .check-date {
+	position: relative;
+	margin-bottom: 15px;
+}
+.room-booking form .check-date label {
+	font-size: 14px;
+	color: #707079;
+	display: block;
+	margin-bottom: 10px;
+}
+.room-booking form .check-date input {
+	width: 100%;
+	height: 50px;
+	border: 1px solid #ebebeb;
+	border-radius: 2px;
+	font-size: 16px;
+	color: #19191a;
+	font-weight: 500;
+	padding-left: 20px;
+}
+.room-booking form .check-date i {
+	color: #f0e00a;
+	position: absolute;
+	right: 18px;
+	bottom: 17px;
+}
+.room-booking form .select-option {
+	margin-bottom: 15px;
+}
+.room-booking form .select-option label {
+	font-size: 14px;
+	color: #707079;
+	display: block;
+	margin-bottom: 10px;
+}
+.room-booking form .select-option .nice-select {
+	border-radius: 2px;
+	border: 1px solid #ebebeb;
+	height: 50px;
+	line-height: 50px;
+	outline: none;
+	padding-left: 20px;
+	width: 100%;
+	float: none;
+}
+.room-booking form .select-option .nice-select:after {
+	border-bottom: 2px solid #f0e00a;
+	border-right: 2px solid #f0e00a;
+	height: 10px;
+	margin-top: 0;
+	right: 20px;
+	width: 10px;
+	top: 36%;
+}
+.room-booking form .select-option .nice-select span {
+	font-size: 16px;
+	color: #19191a;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+.room-booking form .select-option .nice-select .list {
+	margin-top: 0;
+	width: 100%;
+}
+.room-booking form button {
+	display: block;
+	font-size: 14px;
+	text-transform: uppercase;
+	border: 1px solid #f0e00a;
+	border-radius: 5px;
+	color: #f0e00a;
+	font-weight: 500;
+	background: transparent;
+	width: 50%;
+	height: 46px;
+	margin-top: 30px;
+}
+.room-booking form button:hover{
+	background-color: #dfac08 ;
+	border: 1px solid #f0e00a;
+	color: #fff;
+}
+
+.container form .sub{
+	font-size: 14px;
+	text-transform: uppercase;
+	border: 1px solid #f08c0a;
+	border-radius: 5px;
+	padding: 10px;
+	color: #f08c0a;
+	font-weight: 700;
+	background: transparent;
+	margin-left: 30%;
+	margin-top: 30px;
+}
+
+}
