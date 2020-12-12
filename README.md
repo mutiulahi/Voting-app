@@ -1,7 +1,7 @@
 # Voting-app
 
 
-A web application for online voting. Built using pure PHP
+A web application for online voting. Built using pure PHP, html, css, JavaScript
 
 
 ## Author
