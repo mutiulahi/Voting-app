@@ -5,35 +5,39 @@ exit();
 }
 ?>
 <?php
-
-if(isset($_POST['submit']))
-{
-    $name = $_SESSION['names'];
-    $db_con = new mysqli('localhost','root','','evoting');
-    $vote = "INSERT INTO IdvotersCount (voterID) VALUES('$name')";
-
-    if(mysqli_query($db_con, $vote)) {
-        foreach($_POST as $key=> $inputValue){    
-            $query = "INSERT INTO countersv (votercount) VALUES('$inputValue')";
-            if(mysqli_query($db_con, $query)) {
-                echo"<script type=\"text/javascript\"> 
-                alert(\"Successful !\");
-                window.location = \"vote_page.php\"</script>";
-            }
-            else{
-                echo"<script type=\"text/javascript\"> 
-                alert(\"Sorry you can only vote once !\");
-                window.location = \"index.php\"</script>";          
-            }
-        }
-    }
-    else
+    if(isset($_POST['submit']))
     {
-        echo"<script type=\"text/javascript\"> 
-        alert(\"Sorry you can only vote once !\");
-        window.location = \"index.php\"</script>";
-    } 
-}
+        include 'includes/database.php';
+
+        $name = $_SESSION['names'];
+        $check_exist = "SELECT * FROM idvoterscount WHERE voterID = '$name'";
+        $rowcount = mysqli_num_rows( mysqli_query($con, $check_exist));
+        if ($rowcount > 0) {
+            echo"<script type=\"text/javascript\"> 
+            alert(\"Sorry you can only vote once !\");
+            window.location = \"index.php\"</script>";
+        } else {
+            $vote = "INSERT INTO idvoterscount (voterID) VALUES('$name')";
+
+
+            if(mysqli_query($con, $vote)) {
+                foreach($_POST as $key=> $inputValue){   
+    
+                    $query = "INSERT INTO countersv (votercount) VALUES('$inputValue')";
+                    if(mysqli_query($con, $query)) {
+                        echo"<script type=\"text/javascript\"> 
+                        alert(\"Successful !\");
+                        window.location = \"vote_page.php\"</script>";
+                    }
+                    else{
+                        echo"<script type=\"text/javascript\"> 
+                        alert(\"Sorry you can only vote once !\");
+                        window.location = \"index.php\"</script>";          
+                    }
+                }
+            }
+        } 
+    }
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -144,13 +148,55 @@ if(isset($_POST['submit']))
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="breadcrumb-text">
+                    <div class="breadcrumb-text mb-5">
                         <h2>Voting Room</h2>
                         <div class="bt-option">
                             <a href="./index.php">Home</a>
                             <span>Vote</span>
                         </div>
                     </div>
+                    <section class="rooms-section spad" style="margin-top:-50px; margin-bottom: auto;">
+                        <div class="container">
+                            <form action="vote_page.php" method="post">
+                                <?php
+
+                                    include 'includes/database.php';
+
+                                    $posst = array();
+                                    $fet = "SELECT position FROM posts";
+                                    $result = mysqli_query($con, $fet);
+                                    while($row=mysqli_fetch_assoc($result))
+                                    {
+                                        $posst[] = $row['position'];  
+                                    }
+                                    $pnumber = sizeof($posst);
+                                    for($i=0; $i<$pnumber; $i++)
+                                    {
+                                        echo '<div class="contestants">
+                                        <h4>'.$posst[$i].'</h4>';
+                                        $post_passed = $posst[$i];
+                                        $arr = array();
+                                        $fetch = "SELECT fullname FROM contestants WHERE post = '$post_passed'  ";
+                                        $result = mysqli_query($con, $fetch);
+                                        while($row=mysqli_fetch_assoc($result))
+                                        {
+                                            $arr[] = $row['fullname'];  
+                                        }
+                                            $number = sizeof($arr);
+                                        for($ii=0; $ii<$number; $ii++)
+                                        {
+                                            $enter =  $arr[$ii].' for '.$post_passed;
+                                            
+                                            echo"<label> <input type='radio' value='$enter' name='$post_passed'> ".$arr[$ii]." </label>";
+                                            
+                                        }
+                                        echo'</div>';
+                                    }
+                                ?>
+                                <button  type="submit" name="submit">Submit Your Vote</button>
+                            </form>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -159,46 +205,48 @@ if(isset($_POST['submit']))
 
     <!-- vote Section Begin -->
 
-    <section class="rooms-section spad" style="margin-top:-50px; margin-bottom: auto;">
+    <!-- <section class="rooms-section spad" style="margin-top:-50px; margin-bottom: auto;">
         <div class="container">
             <form action="vote_page.php" method="post">
                 <?php
-            $posst = array();
-            $con = mysqli_connect('localhost', 'root', '', 'evoting');
-            $fet = "SELECT post FROM postreg";
-            $result = mysqli_query($con, $fet);
-            while($row=mysqli_fetch_assoc($result))
-            {
-                $posst[] = $row['post'];  
-            }
-            $pnumber = sizeof($posst);
-            for($i=0; $i<$pnumber; $i++)
-            {
-                echo '<div class="contestants">
-                <h4>'.$posst[$i].'</h4>';
-                $post_passed = $posst[$i];
-                $arr = array();
-                $fetch = "SELECT fullname FROM contestants WHERE post = '$post_passed'  ";
-                $result = mysqli_query($con, $fetch);
-                while($row=mysqli_fetch_assoc($result))
-                {
-                    $arr[] = $row['fullname'];  
-                }
-                    $number = sizeof($arr);
-                for($ii=0; $ii<$number; $ii++)
-                {
-                    $enter =  $arr[$ii].' for '.$post_passed;
-                    
-                    echo"<label> <input type='radio' value='$enter' name='$post_passed'> ".$arr[$ii]." </label>";
-                    
-                }
-                echo'</div>';
-            }
-         ?>
+
+                    include 'includes/database.php';
+
+                    $posst = array();
+                    $fet = "SELECT position FROM posts";
+                    $result = mysqli_query($con, $fet);
+                    while($row=mysqli_fetch_assoc($result))
+                    {
+                        $posst[] = $row['position'];  
+                    }
+                    $pnumber = sizeof($posst);
+                    for($i=0; $i<$pnumber; $i++)
+                    {
+                        echo '<div class="contestants">
+                        <h4>'.$posst[$i].'</h4>';
+                        $post_passed = $posst[$i];
+                        $arr = array();
+                        $fetch = "SELECT fullname FROM contestants WHERE post = '$post_passed'  ";
+                        $result = mysqli_query($con, $fetch);
+                        while($row=mysqli_fetch_assoc($result))
+                        {
+                            $arr[] = $row['fullname'];  
+                        }
+                            $number = sizeof($arr);
+                        for($ii=0; $ii<$number; $ii++)
+                        {
+                            $enter =  $arr[$ii].' for '.$post_passed;
+                            
+                            echo"<label> <input type='radio' value='$enter' name='$post_passed'> ".$arr[$ii]." </label>";
+                            
+                        }
+                        echo'</div>';
+                    }
+                ?>
                 <button class="sub" type="submit" name="submit">Submit Your Vote</button>
             </form>
         </div>
-    </section>
+    </section> -->
 
 
 

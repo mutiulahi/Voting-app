@@ -1,15 +1,18 @@
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'evoting');
+include 'includes/database.php';
+
 $validateQuery = "SELECT contestantReg FROM pages";
-$resValidate = mysqli_query($conn, $validateQuery);
+$resValidate = mysqli_query($con, $validateQuery);
 while($row = mysqli_fetch_array($resValidate))
 	{
 		$tes = $row['contestantReg'];
 	}
 	if( $tes == 'activated'){
-		include'contestantValidation.php';
+		
+		include 'contestantValidation.php';
 	}
 	else{
-		include'main.php';
+
+		include 'main.php';
 }
 ?>

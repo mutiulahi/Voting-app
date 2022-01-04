@@ -1,9 +1,4 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+ 
 <?php
 session_start();
 if(!isset($_SESSION['name'])){
@@ -14,11 +9,9 @@ if(!isset($_SESSION['name'])){
 <html>
 
 <head>
-    <title>Admin Panel | Post</title>
+    <title>Add position | Voting admin panel </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <script type="application/x-javascript">
     addEventListener("load", function() {
         setTimeout(hideURLbar, 0);
@@ -40,15 +33,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/modernizr.custom.js"></script>
     <!--webfonts-->
-    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic'
-        rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <!--//webfonts-->
     <!--animate-->
     <link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
     <script src="js/wow.min.js"></script>
-    <script>
-    new WOW().init();
-    </script>
+    <script> new WOW().init(); </script>
     <!--//end-animate-->
     <!-- chart -->
     <script src="js/Chart.js"></script>
@@ -84,33 +74,50 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 <div class="row-one">
                     <div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         <div class="form-title">
-                            <h4>Add New Post :</h4>
+                            <h4>Add new post :</h4>
                         </div>
                         <div class="form-body">
                             <?php
-                                if(isset($_POST['submit'])){
-                                    $position = $_POST['post'];
-                                    $conn = new mysqli('localhost', 'root', '', 'evoting');
-                                    $query = "INSERT INTO PostReg (post)VALUES('$position')";
-                                    if(mysqli_query($conn,$query)){
-                                        echo'Successfully';
+                                if(isset($_POST['submit']))
+                                { 
+    								include '../includes/database.php';
+
+                                    $position = $_POST['position'];  
+
+                                    $check = "SELECT * FROM posts where position = '$position'";
+                                    $result = mysqli_query($con, $check);
+                                    $rowcount = mysqli_num_rows( $result );
+
+                                    if (!$rowcount>0) 
+                                    { 
+                                        $add_position = "INSERT INTO posts (position)VALUES('$position')";
+                                        if (mysqli_query($con, $add_position)) {
+
+                                            echo"<script type=\"text/javascript\"> 
+                                            alert(\"The $position is successfuly added!\");
+                                            window.location = \"Post_add.php\"</script>";
+
+                                        }else{
+
+                                            echo "Error 505 Internal error" . mysqli_error($con);
+
+                                        }
                                     }
-                                    else{
+                                    else 
+                                    {
                                         echo"<script type=\"text/javascript\"> 
-    										alert(\"Sorry post $position is existing\");
-    										window.location = \"Post_add.php\"</script>";
-                                    }
+                                        alert(\"Sorry post $position is existing\");
+                                        window.location = \"Post_add.php\"</script>";
+                                    }  
                                 }
                             ?>
                             <form action="Post_add.php" method="post">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">New Post</label>
-                                    <input type="text" class="form-control" placeholder="Add new post " name="post">
-                                </div>
-                                <div class="checkbox">
-                                    <label> <input type="checkbox"> Check me out </label>
-                                </div>
-                                <button type="submit" class="btn btn-default" name="submit">Submit</button>
+                                    <label for="exampleInputEmail1" class="mb-4">Enter new post: </label><br><br>
+                                    <input type="text" class="form-control" placeholder="Add new post " name="position" required>
+                                </div>                                                                                                   
+                                                                                                   
+                                <button type="submit" class="btn btn-primary" name="submit"> Add <i class="fa fa-plus"></i></button>
                             </form>
                         </div>
                     </div>

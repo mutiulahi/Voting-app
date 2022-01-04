@@ -1,10 +1,4 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<?php
+ <?php
 session_start();
 if(!isset($_SESSION['name'])){
 	header('Location:index.php');
@@ -83,75 +77,90 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
             <div class="main-page">
                 <div class="row-one">
                     <div class="tables">
-                        <h3 class="title1">Tables</h3>
+                        <h3 class="title1">Position</h3>
 
                         <div class="bs-example widget-shadow" data-example-id="hoverable-table">
-                            <h4>Hover Rows Table:</h4>
+                            <h4>Positions:</h4>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
                                         <th>Post Registered</th>
+                                        <th>Added Date</th>
                                         <th>Update</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                $id = array();
-                                $pos = array();
-                                $conn = mysqli_connect('localhost', 'root', '', 'evoting');
-                                $query = "SELECT id ,post FROM PostReg";
-                                $result= mysqli_query($conn,$query);
-                                while($row = mysqli_fetch_array($result)){
-                                    $id[] = $row['id'];
-                                    $pos[] =$row['post'];
-                                }
-                                $size = sizeof($id);
-                                for($i=0; $i<$size; $i++){
-								echo"<form action='view_modified.php' method='post'>";
-								echo'<tr>'; 
-								echo"<th scope='row'>".$id[$i]."</th>"; 
-								echo"<td>".$pos[$i]."</td>"; 
-								
-								echo"<td><button type='submit' class='btn btn-default' name='name' value ='".$id[$i]."'><i class='fa fa-edit'></i> Edit</button></td>";
-                                echo"<td><button type='submit' class='btn btn-default' name='delete' value ='".$id[$i]."'><i class='fa fa-trash-o'></i> Delete</button></td>";
-								echo'</tr>';
-								echo"</form>";
-							} 
-							
-                            if(isset($_POST['name'])){
-								$_SESSION['check']= $_POST['name'];
-								echo "
-								<form action='view_modified.php' method='post'>
-								<input type='text' class='form-control'  placeholder='update selected post' name = 'Uppost'>
-								
-								<button type='submit' class='btn btn-default' name='UPsubmit'>Submit</button>
-								</form> ";    
-							}
-							if(isset($_POST['UPsubmit'])){
-								$update = $_POST['Uppost'];
-								$selected = $_SESSION['check'];
-								$upquery = "UPDATE postreg SET post = '$update' WHERE id='$selected'";
-								if(mysqli_query($conn, $upquery))
-								{
-									
-									echo"<script type=\"text/javascript\"> 
-    										alert(\"Update successfully!\");
-    										window.location = \"view_modified.php\"</script>";
-								}
-							}
+                                        $id = array();
+                                        $pos = array();
+                                        $date = array();
 
-							if(isset($_POST['delete'])){
-								$selected = $_POST['delete'];
-								$upquery = "DELETE FROM postreg WHERE id='$selected'";
-								if(mysqli_query($conn, $upquery))
-								{
-									echo"<script type=\"text/javascript\"> 
-    										alert(\"Delecting is successfully !\");
-    										window.location = \"view_modified.php\"</script>";
-								}
-							}
+                                        include '../includes/database.php';
+
+                                        $query = "SELECT * FROM posts";
+
+                                        $result= mysqli_query($con,$query);
+                                        while($row = mysqli_fetch_array($result)){
+                                            $id[] = $row['id'];
+                                            $pos[] =$row['position'];
+                                            $date[] =$row['date'];
+                                        }
+                                        $size = sizeof($id);
+                                        if (empty($id)) {
+                                           echo'<tr>'; 
+                                           echo"<td style='margin-left:200px;'>No posittion is added</td>"; 
+                                           echo'</tr>';
+                                        }else{
+                                            for($i=0; $i<$size; $i++){
+                                            
+                                                echo"<form action='view_modified.php' method='post'>";
+                                                echo'<tr>'; 
+                                                echo"<th scope='row'>".($i+1)."</th>"; 
+                                                echo"<td>".$pos[$i]."</td>"; 
+                                                echo"<td>".$date[$i]."</td>";
+                                                echo"<td><button type='submit' class='btn btn-default' name='selected' value ='".$id[$i]."'><i class='fa fa-edit'></i> Edit</button></td>";
+                                                echo"<td><button type='submit' class='btn btn-default' name='delete' value ='".$id[$i]."'><i class='fa fa-trash-o'></i> Delete</button></td>";
+                                                echo'</tr>';
+                                                echo"</form>";
+                                        }
+                                       
+                                    } 
+                                    
+                                    if(isset($_POST['selected'])){
+                                        $_SESSION['checked']= $_POST['selected'];
+                                        echo $pos[$i];
+                                        echo "
+                                        <form action='view_modified.php' method='post'>
+                                        <input type='text' class='form-control' value='".$pos[$i]."' placeholder='update selected post' name = 'Uppost'><br/>
+                                        
+                                        <button type='submit' class='btn btn-default' name='UPsubmit'>Submit</button>
+                                        </form> ";    
+                                    }
+                                    if(isset($_POST['UPsubmit'])){
+                                        $update = $_POST['Uppost'];
+                                        $selected = $_SESSION['checked'];
+                                        $upquery = "UPDATE posts SET position = '$update' WHERE id='$selected'";
+                                        if(mysqli_query($con, $upquery))
+                                        {
+                                            
+                                            echo"<script type=\"text/javascript\"> 
+                                                    alert(\"Update successfully!\");
+                                                    window.location = \"view_modified.php\"</script>";
+                                        }
+                                    }
+
+                                    if(isset($_POST['delete'])){
+                                        $selected = $_POST['delete'];
+                                        $upquery = "DELETE FROM posts WHERE id='$selected'";
+                                        if(mysqli_query($con, $upquery))
+                                        {
+                                            echo"<script type=\"text/javascript\"> 
+                                                    alert(\"Delecting is successfully !\");
+                                                    window.location = \"view_modified.php\"</script>";
+                                        }
+                                    }
                             ?>
                                 </tbody>
                             </table>

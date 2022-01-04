@@ -114,53 +114,45 @@
             <div class="col-lg-6">
                 <?php
            
-            if (isset($_POST['submit'])){
+                    if (isset($_POST['submit'])){
 
-            
-            $matric = $_POST["matric"];
-            $pass = $_POST["pass"];
-            $cpass = $_POST["cpass"];
-            $faculty = $_POST["faculty"];
-            $department = $_POST["department"];
-            $email = $_POST["email"];
+                        include 'includes/database.php';
+                    
+                    $matric = $_POST["matric"];
+                    $pass = $_POST["pass"];
+                    $cpass = $_POST["cpass"];
+                    $faculty = $_POST["faculty"];
+                    $department = $_POST["department"];
+                    $email = $_POST["email"];
 
-            if ($pass!==$cpass){
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px;
-                border-radius: 10px;'>Password don't match!</span>";
-            }
-            elseif(strlen($matric) > 11){
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; 
-                border-radius: 10px;'>Invalid matric number!</span>";
+                    if ($pass!==$cpass){
+                        echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px;
+                        border-radius: 10px;'>Password don't match!</span>";
+                    }
+                    elseif(strlen($matric) > 11){
+                        echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; 
+                        border-radius: 10px;'>Invalid matric number!</span>";
 
-            }
-            else{
-            $DATABASE_HOST = 'localhost';
-            $DATABASE_USER = 'root';
-            $DATABASE_PASS = '';
-            $DATABASE_NAME = 'evoting';
-            $db_con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-            if (mysqli_connect_errno()) {
-                die ('Failed to connect to MySQL: ' . mysqli_connect_error());
-            }
-                
-            $stmt = "INSERT INTO votelogin (matric, password, email,faculty, department)VALUES 
-            ('$matric', '$pass', '$email', '$faculty', '$department') ";
+                    }
+                    else{ 
+                    $stmt = "INSERT INTO votelogin (matric, password, email,faculty, department)VALUES 
+                    ('$matric', '$pass', '$email', '$faculty', '$department') ";
 
-            if(mysqli_query($db_con, $stmt))
-            {
+                    if(mysqli_query($con, $stmt))
+                    {
 
-                echo"<script type=\"text/javascript\"> 
-                alert(\"Registration successfully!\");
-                window.location = \"index.php\"</script>";
-                
+                        echo"<script type=\"text/javascript\"> 
+                        alert(\"Registration successfully!\");
+                        window.location = \"index.php\"</script>";
+                        
+                    }
+                    else{
+                        
+                        echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; 
+                        border-radius: 10px;'>This matric number as been used by another person!</span>";
+                    }
+                }
             }
-            else{
-                
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; 
-                border-radius: 10px;'>This matric number as been used by another person!</span>";
-            }
-        }
-    }
         ?>
                 <div class="room-booking" style="margin-bottom: 10%;">
                     <!-- <h3>Contestant Registration</h3>-->

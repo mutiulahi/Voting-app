@@ -1,60 +1,54 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <?php
-session_start();
-if(!isset($_SESSION['name'])){
-	header('Location:index.php');
-}
+    session_start();
+    if(!isset($_SESSION['name'])){
+        header('Location:index.php');
+    }
 
 
-if(isset($_POST['submit'])){
-	$conn = new mysqli('localhost', 'root', '', 'evoting'); 
+    if(isset($_POST['submit'])){
+        include '../includes/database.php';
 
-	$fullname = $_POST['fullname'];
-	$userN = $_POST['username'];
-	$email = $_POST['email'];
-	$password = $_POST['password'];
+        $fullname = $_POST['fullname'];
+        $userN = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-	$InsertInToDb = "INSERT INTO admin(fullname, email, password, username) VALUES ('$fullname', '$email', '$password', '$userN')";
-	if(mysqli_query($conn, $InsertInToDb)){
-		
-		echo"<script type=\"text/javascript\"> 
-		alert(\"Registration successful!\");
-		window.location = \"teamADD.php\"</script>";
-	}
-	else{
-		
-			echo"<script type=\"text/javascript\"> 
-			alert(\"Email or Username is chosen!\");
-			window.location = \"teamADD.php\"</script>";
-		}
-	
+        $check = "SELECT * FROM admin WHERE email = '$email' or username = '$userN'";
+        $result = mysqli_query($con, $check);
+        $rowcount = mysqli_num_rows( $result );
 
-}
+        if ($rowcount > 0) {
+            echo"<script type=\"text/javascript\"> 
+            alert(\"Email or Username is chosen!\");
+            window.location = \"teamADD.php\"</script>";
+        
+        }else{
 
-
+            $InsertInToDb = "INSERT INTO admin(fullname, email, password, username) VALUES ('$fullname', '$email', '$password', '$userN')";
+            if(mysqli_query($con, $InsertInToDb)){
+                
+                echo"<script type=\"text/javascript\"> 
+                alert(\"Registration successful!\");
+                window.location = \"teamADD.php\"</script>";
+            } 
+        } 
+    } 
 ?>
 <!DOCTYPE HTML>
 <html>
 
 <head>
-    <title>Admin Panel | Team</title>
+    <title>Add user | Voting admin panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <script type="application/x-javascript">
-    addEventListener("load", function() {
-        setTimeout(hideURLbar, 0);
-    }, false);
+        addEventListener("load", function() {
+            setTimeout(hideURLbar, 0);
+        }, false);
 
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    }
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
     </script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -75,7 +69,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     <link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
     <script src="js/wow.min.js"></script>
     <script>
-    new WOW().init();
+        new WOW().init();
     </script>
     <!--//end-animate-->
     <!-- chart -->
@@ -113,23 +107,23 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 <div class=" form-grids row form-grids-right">
                     <div class="widget-shadow " data-example-id="basic-forms">
                         <div class="form-title">
-                            <h4>Team registration form:</h4>
+                            <h4> Add Users </h4>
                         </div>
                         <div class="form-body">
                             <form class="form-horizontal" data-toggle="validator" action="teamADD.php" method="POST">
                                 <div class="form-group">
                                     <span for="form-control">Fullname:</span>
-                                    <input type="text" class="form-control" id="inputName" placeholder="Fullname"
+                                    <input type="text" class="form-control mt-4" id="inputName" placeholder="Fullname"
                                         name="fullname" required>
                                 </div>
                                 <div class="form-group">
                                     <span for="form-control">Username:</span>
-                                    <input type="text" class="form-control" id="inputName" placeholder="Username"
+                                    <input type="text" class="form-control mt-4" id="inputName" placeholder="Username"
                                         name="username" required>
                                 </div>
                                 <div class="form-group has-feedback">
                                     <span for="form-control">Email:</span>
-                                    <input type="email" name="email" class="form-control" id="inputEmail"
+                                    <input type="email" name="email" class="form-control mt-4" id="inputEmail"
                                         placeholder="Email" data-error="Sorry, that email address is invalid" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <span class="help-block with-errors">Please enter a valid email address</span>
@@ -137,12 +131,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <div class="form-group">
                                     <span for="form-control">Password:</span>
                                     <input type="password" name="password" data-toggle="validator" data-minlength="6"
-                                        class="form-control" id="inputPassword" placeholder="Password" required>
+                                        class="form-control mt-4" id="inputPassword" placeholder="Password" required>
                                     <span class="help-block">Minimum of 6 characters</span>
                                 </div>
                                 <div class="form-group">
                                     <span for="form-control">Confirm Password:</span>
-                                    <input type="password" class="form-control" id="inputPasswordConfirm"
+                                    <input type="password" class="form-control mt-4" id="inputPasswordConfirm"
                                         data-match="#inputPassword" data-match-error="Whoops, these don't match"
                                         placeholder="Confirm password" required>
                                     <div class="help-block with-errors"></div>

@@ -1,15 +1,15 @@
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'evoting');
+include 'includes/database.php';
 $validateQuery = "SELECT voterReg FROM pages";
-$resValidate = mysqli_query($conn, $validateQuery);
+$resValidate = mysqli_query($con, $validateQuery);
 while($row = mysqli_fetch_array($resValidate))
 	{
 		$tes = $row['voterReg'];
 	}
 	if( $tes == 'activated'){
-		include'voter_signinValidated.php';
+		include 'voter_signinValidated.php';
 	}
 	else{
-		include'main.php';
+		include 'main.php';
 }
 ?>

@@ -81,49 +81,50 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     </div>
                     <div class="form-body" data-example-id="simple-form-inline">
                         <?php
-									$conn = mysqli_connect('localhost', 'root', '', 'evoting');
+                                    include '../includes/database.php';
+
 									if(isset($_POST['activateCR'])){
 										$query = "UPDATE pages SET contestantReg='activated'";
-										if(mysqli_query($conn,$query))
+										if(mysqli_query($con,$query))
 										{
-											echo "Contestant page is Actiavted";
+											echo "<span style='margin-left:40%; text-align:center; margin-bottom:20px;'>Contestant page is Actiavted</span>";
 										}
 									}
 									elseif(isset($_POST['deactivateCR'])){
 										$query = "UPDATE pages SET contestantReg='deactivated'";
-										if(mysqli_query($conn,$query))
+										if(mysqli_query($con,$query))
 										{
-											echo "Contestant page is Deactiavted";
+											echo "<span style='margin-left:40%; text-align:center; margin-bottom:20px;'>Contestant page is Deactiavted</span>";
 										}
 									}
 
 									if(isset($_POST['activateVT'])){
 										$query = "UPDATE pages SET voting='activated'";
-										if(mysqli_query($conn,$query))
+										if(mysqli_query($con,$query))
 										{
-											echo "Voting page is Actiavted";
+											echo "<span style='margin-left:40%; text-align:center; margin-bottom:20px;'>Voting page is Actiavted</span>";
 										}
 									}
 									elseif(isset($_POST['deactivateVT'])){
 										$query = "UPDATE pages SET voting='deactivated'";
-										if(mysqli_query($conn,$query))
+										if(mysqli_query($con,$query))
 										{
-											echo "Voting page is Deactiavted";
+											echo "<span style='margin-left:40%; text-align:center; margin-bottom:20px;'>Voting page is Deactiavted</span>";
 										}
 
 									}
 									if(isset($_POST['activateVRT'])){
 										$query = "UPDATE pages SET voterReg='activated'";
-										if(mysqli_query($conn,$query))
+										if(mysqli_query($con,$query))
 										{
-											echo "Voter's registration page is Actiavted";
+											echo "<span style='margin-left:40%; text-align:center; margin-bottom:20px;'>Voter's registration page is Actiavted</span>";
 										}
 										}
 									elseif(isset($_POST['deactivateVRT'])){
 										$query = "UPDATE pages SET voterReg='deactivated'";
-										if(mysqli_query($conn,$query))
+										if(mysqli_query($con,$query))
 										{
-											echo "Voter's registration page is 'Deactiavted'";
+											echo "<span style='margin-left:40%; text-align:center; margin-bottom:20px;'>Voter's registration page is 'Deactiavted'</span>";
 										}
 									}
 							?>

@@ -6,14 +6,7 @@ if (!isset($_SESSION['paid'])) {
 	header('Location: contestant_login_page.php');
 	exit();
 }
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'evoting';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-if (mysqli_connect_errno()) {
-	die ('Failed to connect to MySQL: ' . mysqli_connect_error());
-}
+include 'includes/database.php';
 
 $stmt = $con->prepare('SELECT matric, fullname, faculty, department, post, level, cgp, email, profileImage, manifestos FROM contestants WHERE id = ?');
 
@@ -104,13 +97,10 @@ $date = date("d m Y")
                         <div class="nav-menu">
                             <nav class="mainmenu">
                                 <ul>
-                                    <li> <a href="contestant_login_page.php"><i class="fa fa-sign-out"></i> Logout</a>
+                                    <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
                                     </li>
                                 </ul>
-                            </nav>
-                            <!--<div class="nav-right search-switch">
-                                <i class="icon_search"></i>
-                            </div>-->
+                            </nav> 
                         </div>
                     </div>
                 </div>
@@ -141,23 +131,22 @@ $date = date("d m Y")
     <section class="room-details-section spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <h3 style="font-family: arial">Profile</h3>
-                    <div class="rd-reviews">
-
+                    <div class="rd-reviews"> 
                         <div class="review-item" style="margin-top:50px;">
                             <div class="ri-pic">
-                                <!--<img src="img/room/avatar/avatar-1.jpg" alt="">-->
+                                <!-- <img src="img/room/avatar/avatar-1.jpg" alt=""> -->
                                 <img src="img/profilePics/<?=$image?> ">
                             </div>
                             <div class="ri-text">
-                                <span><?=$date?></span>
-                                <!-- <div class="rating">
-                                    <div class="rdt-right">
+                                <div class="rating">
+                                    <div class="rdt-right mb-5">
                                         <a href="contestant_signin_page.php" class="profile">Update Your Profile</a>
                                     </div>
-                            </div>-->
-                                <h5><?=$fullname?></h5>
+                                </div>
+                                <span><?=$date?></span>
+                                <h2><?=$fullname?></h2>
                                 <div>
                                     <h2 style="margin-top:10px;"><span>citiz:</span><?=$cgp?></h2>
                                     <table style="margin-top:10px;">
@@ -202,34 +191,7 @@ $date = date("d m Y")
                     <p class="f-para"><?=$manifesto?></p>
 
                 </div>
-            </div>
-            <!--  <div class="review-add">
-                        <h4>Add Review</h4>
-                        <form action="#" class="ra-form">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="Name*">
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" placeholder="Email*">
-                                </div>
-                                <div class="col-lg-12">
-                                    <div>
-                                        <h5>You Rating:</h5>
-                                        <div class="rating">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star-half_alt"></i>
-                                        </div>
-                                    </div>
-                                    <textarea placeholder="Your Review"></textarea>
-                                    <button type="submit">Submit Now</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>-->
+            </div> 
         </div>
         </div>
         </div>

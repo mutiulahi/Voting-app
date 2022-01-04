@@ -64,78 +64,75 @@
         <div style="margin-top: -70px; width:100%">
             <div class="col-lg-6">
                 <?php
-           
-            if (isset($_POST['submit'])){
+                        include 'includes/database.php';
+                    
+                        if (isset($_POST['submit']))
+                        { 
+                                $fulln = $_POST["fullname"];
+                                $matric = $_POST["matric"];
+                                $pass = $_POST["pass"];
+                                $cpass = $_POST["cpass"];
+                                $faculty = $_POST["faculty"];
+                                $department = $_POST["department"];
+                                $post = $_POST["post"];
+                                $level = $_POST["level"];
+                                $cgp = $_POST["cgp"];
+                                $manifesto = $_POST["manifesto"];
+                                $email = $_POST["email"];
+                                
+                                $image = $_FILES["picture"]["name"];
+                                $uploadedPic = $matric.'_'.$image;
+                                $imageType = $_FILES["picture"]["type"];
+                                $imageDestination ='img/profilePics/'.$uploadedPic;
+                                
 
-            $fulln = $_POST["fullname"];
-            $matric = $_POST["matric"];
-            $pass = $_POST["pass"];
-            $cpass = $_POST["cpass"];
-            $faculty = $_POST["faculty"];
-            $department = $_POST["department"];
-            $post = $_POST["post"];
-            $level = $_POST["level"];
-            $cgp = $_POST["cgp"];
-            $manifesto = $_POST["manifesto"];
-            $email = $_POST["email"];
-            
-            $image = $_FILES["picture"]["name"];
-            $uploadedPic = $matric.'_'.$image;
-            $imageType = $_FILES["picture"]["type"];
-            $imageDestination ='img/profilePics/'.$uploadedPic;
-            
 
+                                if ($pass!==$cpass){
+                                    echo "<span style='.color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Password don't match!</span>";
+                                }
+                                elseif (empty($post) || empty($level)){
+                                    echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>You have not select your post or level</span>";
 
+                                }
+                                elseif (strpos($imageType, "image") !== 0){
+                                    echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Select valied image file</span>";
+                                }
+                                elseif (strlen($pass)<6 && strlen($cpass)<6){
+                                    echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Your password is too weak</span>";
+                                }
+                                elseif (strlen($matric)>20) {
+                                    echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Matric number must not more than 20 character</span>";
+                                }elseif (strlen($faculty)>100) {
+                                    echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Faculty must not more than 100 character</span>";
+                                }
+                                
+                            else { 
+                                $stmt = "INSERT INTO contestants (matric, password, fullname, faculty, department, post, level, cgp, email, profileImage, manifestos)VALUES 
+                                ( '$matric', '$pass', '$fulln', '$faculty','$department','$post','$level', '$cgp', '$email', '$uploadedPic', '$manifesto')";
 
-            if ($pass!==$cpass){
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Password don't match!</span>";
-            }
-            elseif (empty($post) || empty($level)){
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>You have not select your post or level</span>";
-
-            }
-            elseif (strpos($imageType, "image") !== 0){
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Select valied image file</span>";
-            }
-            elseif (strlen($pass)<6 && strlen($cpass)<6){
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>Your password is too weak</span>";
-            }
-            
-            else{
-            $DATABASE_HOST = 'localhost';
-            $DATABASE_USER = 'root';
-            $DATABASE_PASS = '';
-            $DATABASE_NAME = 'evoting';
-            $db_con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-            if (mysqli_connect_errno()) {
-                die ('Failed to connect to MySQL: ' . mysqli_connect_error());
-            }
-                
-            $stmt = "INSERT INTO contestants (matric, password, fullname, faculty, department, post, level, cgp, email, profileImage, manifestos)VALUES 
-            ( '$matric', '$pass', '$fulln', '$faculty','$department','$post','$level', '$cgp', '$email', '$uploadedPic', '$manifesto')";
-
-            if(mysqli_query($db_con, $stmt))
-            {
-                $imageDestination ='img/profilePics/'.$uploadedPic;
-                move_uploaded_file($_FILES['picture']['tmp_name'], $imageDestination);
-                
-                echo"<script type=\"text/javascript\"> 
-                alert(\"Registration successfully!\");
-                window.location = \"contestant_login_page.php\"</script>";
-                
-            }
-            else{
-                echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>This matric number as being used by another person!</span>";
-            }
-        }
-    }
+                                if(mysqli_query($con, $stmt))
+                                {
+                                    $imageDestination ='img/profilePics/'.$uploadedPic;
+                                    move_uploaded_file($_FILES['picture']['tmp_name'], $imageDestination);
+                                    
+                                    echo"<script type=\"text/javascript\"> 
+                                    alert(\"Registration successfully!\");
+                                    window.location = \"contestant_login_page.php\"</script>";
+                                    
+                                }
+                                else{
+                                    // echo mysqli_error($con);
+                                    echo "<span style='color: red; border: 1px solid #f3f3f3; padding: 10px; border-radius: 10px;'>".mysqli_error($con)."</span>";
+                                }
+                            }
+                        }
         ?>
                 <div class="room-booking" style="margin-bottom: 10%;">
                     <!-- <h3>Contestant Registration</h3>-->
-                    <form action="contestant_signin_page.php" data-toggle="validator" method="post"
+                    <form action="contestant_signin_page.php" method="post"
                         enctype="multipart/form-data">
                         <div class="check-date">
-                            <label for="date-in" style="text-align:left;">Full name <span style="color:red">*</span>
+                            <label for="date-in" style="text-align:left;">Full name <span style="color:red">*</span> 
                             </label>
                             <input type="text" class="date-input hasDatepicker" id="inputName" id="date-in"
                                 name="fullname" required>
@@ -174,20 +171,12 @@
                             <select id="guest inputEmail" style="" name="post">
                                 <option value="">post</option>
                                 <?php
-                                    $postarr = array();
-                                    $DATABASE_HOST = 'localhost';
-                                    $DATABASE_USER = 'root';
-                                    $DATABASE_PASS = '';
-                                    $DATABASE_NAME = 'evoting';
-                                    $db_con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-                                    if (mysqli_connect_errno()) {
-                                        die ('Failed to connect to MySQL: ' . mysqli_connect_error());
-                                    }
-                                    $query ="SELECT post FROM postreg";
-                                    $result = mysqli_query($db_con, $query);
+                                    
+                                    $query ="SELECT position FROM posts";
+                                    $result = mysqli_query($con, $query);
                                     while($row=mysqli_fetch_array($result))
                                     {
-                                        $postarr[] = $row['post'];
+                                        $postarr[] = $row['position'];
                                     } 
                                     $num = sizeof($postarr);
                                     for($i=0; $i<$num; $i++)
@@ -198,7 +187,7 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="select-opti">
+                        <div class="select-option check-date">
                             <label for="guest" style="text-align:left;">Level <span style="color:red">*</span> </label>
                             <select id="guest" style="display: none;" name="level">
                                 <option value="">Level</option>
@@ -211,11 +200,11 @@
                         </div>
                         <div class="check-date">
                             <label for="date-out" style="text-align:left;">Citizenship Grade <span
-                                    style="color:red">*</span></label>
-                            <input type="text" class="date-input hasDatepicker" id="date-out" name="cgp" required>
+                                    style="color:red">*</span> <code> e.g (8) max : 10 </code> </label>
+                            <input type="number" class="date-input hasDatepicker" id="date-out" name="cgp" required>
                         </div>
                         <div class="check-date">
-                            <label for="date-out" style="text-align:left;">Password (minimum of 6 character) <span
+                            <label for="date-out" style="text-align:left;">Password <code> (minimum of 6 character) </code> <span
                                     style="color:red">*</span></label>
                             <input type="password" class="date-input hasDatepicker" id="inputPassword"
                                 data-toggle="validator" data-minlength="6" name="pass" required>
@@ -226,17 +215,17 @@
                             <input type="password" class="date-input hasDatepicker" id="inputPassword" name="cpass"
                                 data-match="#inputPassword" data-match-error="Whoops, these don't match"
                                 id="inputPasswordConfirm" required>
-                            <span class="help-block">Minimum of 6 characters</span>
+                            <!-- <span class="help-block">Minimum of 6 characters</span> -->
                         </div>
 
 
                         <div class="img">
-                            <label>Browse profile picture <span style="color:red">*</span> </label>
+                            <label>Profile picture <span style="color:red">*</span> </label>
                             <input type="file" name="picture" id="picture" style="border: solid 1px #ebebeb" required>
                         </div>
 
                         <div class="textArea">
-                            <label for="date-out">Manifesto <span style="color:red">*</span> </label>
+                            <label for="date-out">Manifesto <span style="color:red">*</span>  </label>
                             <textarea name="manifesto" id="txtarea1" cols="40" rows="5"
                                 style="border: solid 1px #ebebeb" required></textarea>
                         </div>

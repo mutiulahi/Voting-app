@@ -1,9 +1,4 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+
 <?php
 session_start();
 ?>
@@ -11,7 +6,7 @@ session_start();
 <html>
 
 <head>
-    <title>Admin Panel</title>
+    <title> Login | Voting admin panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -76,12 +71,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 							{
 								
 
-								$condb = mysqli_connect('localhost', 'root', '', 'evoting');
-								if(mysqli_connect_error()){
-									die("Error connecting to mysql".mysqli_connect_error());
-								}
+								include '../includes/database.php';
 
-								$querydb = $condb->prepare("SELECT id, password from admin WHERE email = ? OR username = ?");
+								$querydb = $con->prepare("SELECT id, password from admin WHERE email = ? OR username = ?");
 								$querydb ->bind_param('ss', $_POST['username'] ,$_POST['username']);
 								$querydb ->execute();
 								$querydb->store_result();

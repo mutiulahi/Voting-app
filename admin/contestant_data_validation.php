@@ -8,17 +8,17 @@ if(!isset($_SESSION['name'])){
 <html>
 
 <head>
-    <title>Admin Panel | Contestants</title>
+    <title>View contestants | Voting admin panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="application/x-javascript">
-    addEventListener("load", function() {
-        setTimeout(hideURLbar, 0);
-    }, false);
+        addEventListener("load", function() {
+            setTimeout(hideURLbar, 0);
+        }, false);
 
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    }
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
     </script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -97,83 +97,85 @@ if(!isset($_SESSION['name'])){
                                 </thead>
                                 <tbody>
                                     <?php
-                                $id = array(); 
-                                $name = array(); 
-                                $matric = array(); 
-                                $post = array();
-                                $level = array();
-                                $faculty = array();
-                                $CGP = array();
-                                $val = array();
+                                        $id = array(); 
+                                        $name = array(); 
+                                        $matric = array(); 
+                                        $post = array();
+                                        $level = array();
+                                        $faculty = array();
+                                        $CGP = array();
+                                        $val = array();
 
-                                $conn = mysqli_connect('localhost', 'root', '', 'evoting');
-                                $query = "SELECT * FROM contestants";
-                                $result= mysqli_query($conn,$query);
-                                while($row = mysqli_fetch_array($result)){
-                                    $id[] = $row['id'];
-                                    $name[] =$row['fullname'];
-                                    $matric[] =$row['matric'];
-                                    $post[] =$row['post'];
-                                    $level[] =$row['level'];
-                                    $faculty[] =$row['faculty'];
-                                    $department[] =$row['department'];
-                                    $CGP[] =$row['cgp'];
-                                    $val[] =$row['validation'];
-                                }
-                                $size = sizeof($id);
-                                for($i=0; $i<$size; $i++){
-								echo"<form action='contestant_data_validation.php' method='post'>";
-								echo'<tr>'; 
-								$p = $i+1;
-								echo"<th scope='row'>".$p."</th>"; 
-								echo"<td>".$name[$i]."</td>"; 
-								echo"<td>".$matric[$i]."</td>"; 
-								echo"<td>".$post[$i]."</td>"; 
-								echo"<td>".$level[$i]."</td>"; 
-								echo"<td>".$faculty[$i]."</td>"; 
-								echo"<td>".$department[$i]."</td>"; 
-								echo"<td>".$CGP[$i]."</td>"; 
-								echo"<td>".$val[$i]."</td>"; 
-								
-								echo"<td><button type='submit' class='btn btn-default' name='activate' value ='".$id[$i]."'>ACTIVATE</button></td>";
-                                echo"<td><button type='submit' class='btn btn-default' name='deactivate' value ='".$id[$i]."'>DEACTIVATE</button></td>";
-								echo'</tr>';
-								echo"</form>";
-                            } 
-                            if(isset($_POST['activate'])){
-                                $update = 'activate';
-                                $selected = $_POST['activate'];
-                                
-								$upquery = "UPDATE contestants SET  validation = '$update' WHERE id='$selected'";
-								if(mysqli_query($conn, $upquery))
-								{
-									echo"<script type=\"text/javascript\"> 
-                                        alert(\"Activation Successful!\");
-                                        window.location = \"contestant_data_validation.php\"</script>";
-									
-                                }
-                                else{
-                                    echo 'error';
-                                }
-							}
+                                        include '../includes/database.php';
 
-							if(isset($_POST['deactivate'])){
-                                $update = 'deactivate';
-                                $selected = $_POST['deactivate'];
-                                
-								$upquery = "UPDATE contestants SET  validation = '$update' WHERE id='$selected'";
-								if(mysqli_query($conn, $upquery))
-								{
-									echo"<script type=\"text/javascript\"> 
-                                        alert(\"Deactivation Successful!\");
-                                        window.location = \"contestant_data_validation.php\"</script>";
-									
-                                }
-                                else{
-                                    echo 'error';
-                                }
-							}
-                            ?>
+                                        $query = "SELECT * FROM contestants";
+                                        $result= mysqli_query($con,$query);
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            $id[] = $row['id'];
+                                            $name[] =$row['fullname'];
+                                            $matric[] =$row['matric'];
+                                            $post[] =$row['post'];
+                                            $level[] =$row['level'];
+                                            $faculty[] =$row['faculty'];
+                                            $department[] =$row['department'];
+                                            $CGP[] =$row['cgp'];
+                                            $val[] =$row['validation'];
+                                        }
+                                        $size = sizeof($id);
+
+                                        for($i=0; $i<$size; $i++){
+
+                                            echo"<form action='contestant_data_validation.php' method='post'>";
+                                            echo'<tr>'; 
+                                            $p = $i+1;
+                                            echo"<th scope='row'>".$p."</th>"; 
+                                            echo"<td>".$name[$i]."</td>"; 
+                                            echo"<td>".$matric[$i]."</td>"; 
+                                            echo"<td>".$post[$i]."</td>"; 
+                                            echo"<td>".$level[$i]."</td>"; 
+                                            echo"<td>".$faculty[$i]."</td>"; 
+                                            echo"<td>".$department[$i]."</td>"; 
+                                            echo"<td>".$CGP[$i]."</td>"; 
+                                            echo"<td>".$val[$i]."</td>";  
+                                            echo"<td><button type='submit' class='btn btn-default' name='activate' value ='".$id[$i]."'>ACTIVATE</button></td>";
+                                            echo"<td><button type='submit' class='btn btn-default' name='deactivate' value ='".$id[$i]."'>DEACTIVATE</button></td>";
+                                            echo'</tr>';
+                                            echo"</form>";
+                                        } 
+                                        if(isset($_POST['activate'])) {
+                                            $update = 'activate';
+                                            $selected = $_POST['activate'];
+                                            
+                                            $upquery = "UPDATE contestants SET  validation = '$update' WHERE id='$selected'";
+                                            if(mysqli_query($con, $upquery))
+                                            {
+                                                echo"<script type=\"text/javascript\"> 
+                                                    alert(\"Activation Successful!\");
+                                                    window.location = \"contestant_data_validation.php\"</script>"; 
+                                            }
+                                            else{
+                                                echo 'error';
+                                            }
+                                        }
+
+                                        if(isset($_POST['deactivate'])){
+                                            $update = 'deactivate';
+                                            $selected = $_POST['deactivate'];
+                                            
+                                            $upquery = "UPDATE contestants SET  validation = '$update' WHERE id='$selected'";
+                                            if(mysqli_query($con, $upquery))
+                                            {
+                                                echo"<script type=\"text/javascript\"> 
+                                                    alert(\"Deactivation Successful!\");
+                                                    window.location = \"contestant_data_validation.php\"</script>";
+                                                
+                                            }
+                                            else{
+                                                echo 'error';
+                                            }
+                                        }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

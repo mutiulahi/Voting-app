@@ -9,11 +9,9 @@ if(!isset($_SESSION['name'])){
 <html>
 
 <head>
-    <title>Admin Panel | Dashboard</title>
+    <title>Dashboard | Voting admin panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <script type="application/x-javascript">
     addEventListener("load", function() {
         setTimeout(hideURLbar, 0);
@@ -84,12 +82,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="stats-right">
                             <?php
-					$condb = mysqli_connect('localhost', 'root', '', 'evoting');
-					if(mysqli_connect_error()){
-						die("Error connecting to database".mysqli_connect_error());
-					}
+													include '../includes/database.php';
+
 					$querydb = "SELECT * FROM votelogin";
-					$result = mysqli_query($condb, $querydb);
+					$result = mysqli_query($con, $querydb);
 					$num = array();
 					while($row = mysqli_fetch_array($result))
 					{
@@ -107,12 +103,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="stats-right">
                             <?php
-					$condb = mysqli_connect('localhost', 'root', '', 'evoting');
-					if(mysqli_connect_error()){
-						die("Error connecting to database".mysqli_connect_error());
-					}
+													// include '../includes/database.php';
+
 					$querydb = "SELECT * FROM contestants";
-					$result = mysqli_query($condb, $querydb);
+					$result = mysqli_query($con, $querydb);
 					$num = array();
 					while($row = mysqli_fetch_array($result))
 					{
@@ -130,12 +124,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="stats-right">
                             <?php
-					$condb = mysqli_connect('localhost', 'root', '', 'evoting');
-					if(mysqli_connect_error()){
-						die("Error connecting to database".mysqli_connect_error());
-					}
+													// include '../includes/database.php';
+
 					$querydb = "SELECT * FROM admin";
-					$result = mysqli_query($condb, $querydb);
+					$result = mysqli_query($con, $querydb);
 					$num = array();
 					while($row = mysqli_fetch_array($result))
 					{

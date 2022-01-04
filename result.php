@@ -4,6 +4,7 @@
                             $query = "SELECT matric FROM votelogin ";
                             $result = mysqli_query($con, $query);
                             while($row = mysqli_fetch_array($result)){
+
                                 $arrTOTAL[] = $row['matric'];
                             }
                             $countTOTAL = sizeof($arrTOTAL);
@@ -82,11 +83,11 @@
                         <!-- Result begin -->
 
                         <?php
-                                $con = mysqli_connect('localhost', 'root', '', 'evoting');
-                                $selectPOST ="SELECT post FROM PostReg";
+                                include 'includes/database.php';
+                                $selectPOST ="SELECT position FROM posts";
                                 $resultPOST = mysqli_query($con, $selectPOST);
                                 while($rowPOST = mysqli_fetch_array($resultPOST)) {
-                                    $postTO = $rowPOST['post'];
+                                    $postTO = $rowPOST['position'];
                                     echo'<label>'.$postTO.'</label>';
                                 
                                     echo'<div name="president" class="disp-Rult">';
@@ -98,12 +99,12 @@
                                     echo $fname;
                                     echo'<div class="ful-pacentage">'; 
                                     $arr = array();
-                                    $search = $fname.' for '.$postTO;
-                                    $conR = mysqli_connect('localhost', 'root', '', 'evoting');
+                                    $search = $fname.' for '.$postTO; 
+
                                     $queryR = "SELECT * FROM countersv WHERE votercount = '$search'";
-                                    $resultR = mysqli_query($conR, $queryR);
+                                    $resultR = mysqli_query($con, $queryR);
                                     if(!$resultR){
-                                        die("Query failed".mysqli_error($conR));
+                                        die("Query failed".mysqli_error($con));
                                     }
                                     while($rowR = mysqli_fetch_array($resultR)){
                                         $arr[] = $rowR['votercount'];
@@ -119,13 +120,7 @@
                             }
                             echo'</div>';
                         }
-                            ?>
-
-                        <!--ending President-->
-
-
-
-                        <!--Result end-->
+                            ?> 
                     </div>
 
                 </div>

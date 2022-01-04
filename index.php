@@ -62,13 +62,11 @@
                                 <label for="date-in">Matric No</label>
                                 <input type="text" name="matric" id="matric" placeholder="17/1000"
                                     style="font-size:12px" required>
-                                <!--<i class="icon_calendar"></i>-->
                             </div>
                             <div class="check-date">
                                 <label for="date-out">Password</label>
                                 <input type="password" name="password" id="password" placeholder="password"
                                     style="font-size:12px" required>
-                                <!--<i class="icon_calendar"></i>-->
                             </div>
                             <button name="login" type="submit">Login</button>
 
@@ -97,24 +95,15 @@
                 <div class="col-lg-8 offset-lg-2">
                     <div class="testimonial-slider owl-carousel">
                         <?php
-                            $DATABASE_HOST = 'localhost';
-                            $DATABASE_USER = 'root';
-                            $DATABASE_PASS = '';
-                            $DATABASE_NAME = 'evoting';
-                            
-                            $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-                            if ( mysqli_connect_errno() ) {
-                                
-                                die ('Failed to connect to MySQL: ' . mysqli_connect_error());
-                            }
+                            include 'includes/database.php';
                             $query = "SELECT fullname, post, manifestos FROM contestants WHERE validation ='activate'";
                             $result = mysqli_query($con, $query);
                             while($row = mysqli_fetch_array($result)){
                             echo'<div class="ts-item">';
                             echo'<p>'.$row['manifestos'].'</p>';
                             echo'<div class="ti-author">';
-                                echo'<h5>'.$row['fullname'].'</h5>';
-                                echo'<h6>'.$row['post'].'</h6>';
+                            echo'<h5>'.$row['fullname'].'</h5>';
+                            echo'<h6>'.$row['post'].'</h6>';
                             echo'</div>';
                             echo'<img src="img/testimonial-logo.png" alt="">';
                             
